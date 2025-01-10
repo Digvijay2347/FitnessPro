@@ -8,7 +8,7 @@ const teamMembers = [
     name: 'Digvijay Singh',
     role: 'Software Engineer',
     expertise: 'Strategic Planning, Integration, Full-Stack, API Development',
-    image: '/src/assets/digg.jpg',
+    image: 'https://i.postimg.cc/SsdzwDQG/dig.jpg',
     linkedin: 'https://www.linkedin.com/in/singh07digvijay/', // Add LinkedIn link
   },
   {
