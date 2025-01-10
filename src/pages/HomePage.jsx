@@ -3,15 +3,17 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import { Home, Dumbbell, Users, MessageCircle, Menu, X } from 'lucide-react';
 import './homepage.css';
 import GetKey from '../components/GetKey';
+import ElectricButton from '../components/ElectricButton';
 
 
-// Import components
+
 import CommunityPage from './CommunityPage';
 import ExploreExercisesPage from './ExploreExercisesPage';
 import AiChatPage from './AiChatPage';
 import FitnessPlanForm from '../components/FitnessPlanForm';
 import FitnessTrackingPage from './FitnessTrackingPage';  
 import LoginPage from '../components/Loginpage';
+import AboutPage from '../components/AboutPage';
 
 const HomePage = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -28,7 +30,7 @@ const HomePage = () => {
   return (
     <Router>
       <div className="flex h-screen bg-gray-50">
-        {/* Mobile menu button */}
+        
         <button
           className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-blue-600 text-white"
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -36,7 +38,7 @@ const HomePage = () => {
           {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Sidebar */}
+        
         <nav className={`
           fixed lg:static inset-y-0 left-0 transform 
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -46,6 +48,7 @@ const HomePage = () => {
           z-30
         `}>
           <div className="flex items-center justify-center px-4 mb-8">
+            
             <h1 className="text-2xl font-bold">FitnessPro</h1>
           </div>
 
@@ -69,7 +72,7 @@ const HomePage = () => {
           </div>
         </nav>
 
-        {/* Main content */}
+        
 <div className="flex-1 flex flex-col overflow-auto">
 <main 
   className="flex-1 overflow-x-hidden overflow-y-auto bg-cover bg-center"
@@ -79,9 +82,8 @@ const HomePage = () => {
       <Routes>
         <Route path="/" element={
           <div className="space-y-12 py-8">
-            {/* Hero Section */}
             <div className="text-center space-y-6 px-4">
-              <h1 className="text-5xl font-bold text-gray-800">Welcome to FitnessPro</h1>
+              <h1 className="typewriter text-5xl font-bold text-gray-800">Welcome to FitnessPro</h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Your all-in-one fitness companion for personalized workouts, expert guidance, and a supportive community.
                 Transform your fitness journey with AI-powered plans and real-time tracking.
@@ -106,10 +108,9 @@ const HomePage = () => {
                 <button className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors">
                   Learn More
                 </button>
+                <ElectricButton/>
               </div>
             </div>
-
-            {/* Stats Section */}
 <div
   className="grid grid-cols-1 md:grid-cols-3 gap-8 px-4"
   ref={(el) => {
@@ -121,7 +122,7 @@ const HomePage = () => {
             counters.forEach((counter) => {
               const target = parseInt(counter.getAttribute('data-target'), 10);
               let start = 0;
-              const increment = target / 100; // Adjust speed here
+              const increment = target / 100;
               const updateCounter = () => {
                 start += increment;
                 if (start >= target) {
@@ -133,10 +134,10 @@ const HomePage = () => {
               };
               updateCounter();
             });
-            observer.disconnect(); // Stop observing once triggered
+            observer.disconnect(); 
           }
         },
-        { threshold: 0.5 } // Trigger when 50% visible
+        { threshold: 0.5 } 
       );
       observer.observe(el);
     }
@@ -176,7 +177,7 @@ const HomePage = () => {
 
 
 
-           {/* Our Services Section */}
+           
 <div className="our-services space-y-12 px-8 py-16 bg-gray-50">
   <div className="text-center space-y-4">
     <h2 className="text-4xl font-bold text-gray-800">Our Services</h2>
@@ -186,7 +187,7 @@ const HomePage = () => {
   </div>
 
   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {/* Service Cards */}
+   
     <div className="bg-white rounded-2xl shadow-lg p-8 transition-transform transform hover:scale-105 hover:shadow-2xl">
       <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
         <Dumbbell className="text-blue-600" size={28} />
@@ -236,7 +237,7 @@ const HomePage = () => {
     </div>
   </div>
 </div>
-            {/* Features Grid */}
+            
             <div className="bg-white rounded-2xl shadow-sm p-8 mx-4">
               <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">Quick Access</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -257,7 +258,7 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* Call to Action */}
+       
             <div className="bg-blue-600 text-white rounded-2xl p-12 mx-4 text-center">
               <h2 className="text-3xl font-bold mb-4">Ready to Start Your Fitness Journey?</h2>
               <p className="text-lg mb-8 max-w-2xl mx-auto">
@@ -270,11 +271,12 @@ const HomePage = () => {
           </div>
         } />
         <Route path="/fitness-plan" element={<FitnessPlanForm />} />
+        <Route path="/aboutpage" element={<AboutPage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/explore" element={<ExploreExercisesPage />} />
         <Route path="/ai-chat" element={<AiChatPage />} />
         <Route path="/fitness-tracking" element={<FitnessTrackingPage />} />
-        <Route path="/login" element={<LoginPage/>} /> {/* Add login page route */}
+        <Route path="/login" element={<LoginPage/>} /> 
       </Routes>
     </div>
   </main>

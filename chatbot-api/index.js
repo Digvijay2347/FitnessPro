@@ -1,6 +1,7 @@
 const express = require('express');
 const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require("@google/generative-ai");
 const cors = require('cors');
+require('dotenv').config();  // Load environment variables from .env file
 
 // Initialize express app
 const app = express();
@@ -25,8 +26,8 @@ const SAFETY_SETTINGS = [
     { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE },
 ];
 
-// Set your API key and model name directly here
-const API_KEY = 'AIzaSyDlq3j-64qT0hdUVQu669dIAFNBxp0nVfI'; // Replace with your actual Gemini API key
+// Access API key and model name from environment variables
+const API_KEY = process.env.API_KEY; // Read from .env file
 const MODEL_NAME = 'gemini-1.5-pro'; // Replace with your model name
 
 // Function to initialize and run the AI chat

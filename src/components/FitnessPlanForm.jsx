@@ -16,6 +16,7 @@ const FitnessPlanForm = () => {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
   const [keyError, setKeyError] = useState(null); // Error for key retrieval
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page
   const planRef = useRef(null);
 
   const handleChange = (e) => {
@@ -60,7 +61,7 @@ const FitnessPlanForm = () => {
       const data = await response.json();
       setPlan(data);
   
-      // Store the generated plan in Supabase without checking for existing key
+      // Store the generated plan in Supabase
       const { error } = await supabase
         .from('fitness_plans')
         .insert([{ generated_key: generatedKey, plan_data: data }]);
@@ -79,7 +80,6 @@ const FitnessPlanForm = () => {
       setLoading(false);
     }
   };
-  
 
   const handleDownloadPDF = async () => {
     if (!plan || !planRef.current) return;
@@ -135,7 +135,23 @@ const FitnessPlanForm = () => {
     // Display the fetched plans
     setHistory(data.map(item => item.plan_data));
     setKeyError(null);
+    setCurrentPage(1); // Reset to first page when new history is retrieved
   };
+
+  // Pagination Logic
+  const itemsPerPage = 3;
+  const indexOfLastPlan = currentPage * itemsPerPage;
+  const indexOfFirstPlan = indexOfLastPlan - itemsPerPage;
+  const currentPlans = history.slice(indexOfFirstPlan, indexOfLastPlan);
+
+  // Generate page numbers
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(history.length / itemsPerPage); i++) {
+    pageNumbers.push(i);
+  }
+
+  // Change Page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="w-full mx-auto p-4 bg-white shadow-md rounded-md flex gap-6">
@@ -242,10 +258,13 @@ const FitnessPlanForm = () => {
 
               <button
                 onClick={handleDownloadPDF}
-                className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200 flex items-center justify-center gap-2"
+                className="flex items-center gap-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition duration-200"
                 disabled={downloading}
               >
-                {downloading ? 'Downloading...' : <><Download size={20} /> Download as PDF</>}
+                {downloading ? (
+                  <div className="animate-spin border-2 border-white rounded-full w-5 h-5 mr-2"></div>
+                ) : null}
+                {downloading ? 'Downloading...' : 'Download as PDF'}
               </button>
             </div>
           </>
@@ -254,38 +273,61 @@ const FitnessPlanForm = () => {
 
       {/* History Section */}
       <div className="flex-1">
-        <h2 className="text-2xl font-bold mb-4">Your Plan History</h2>
+        <h3 className="text-2xl font-bold mb-4">Fitness Plan History</h3>
+
         <div className="mb-4">
           <button
             onClick={handleRetrieveHistory}
-            className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 transition duration-200"
+            className="bg-green-500 text-white p-2 rounded hover:bg-green-600 transition duration-200"
           >
-            Retrieve Plan History
+            Retrieve History
           </button>
+          {keyError && <p className="mt-4 text-red-500">{keyError}</p>}
         </div>
 
-        {keyError && (
-          <p className="mt-4 text-red-500 font-medium">{keyError}</p>
+        {/* Pagination Buttons at the Top */}
+        {history.length > 0 && (
+          <div className="flex justify-center mb-4">
+            {pageNumbers.map(number => (
+              <button
+                key={number}
+                onClick={() => paginate(number)}
+                className={`mx-1 px-3 py-1 rounded ${
+                  currentPage === number 
+                    ? 'bg-blue-500 text-white' 
+                    : 'bg-gray-200 text-gray-700'
+                }`}
+              >
+                {number}
+              </button>
+            ))}
+          </div>
         )}
 
         <div>
-          {history.length > 0 && history.map((plan, index) => (
-            <div key={index} className="mb-6 p-4 border rounded bg-gray-100">
-              <h3 className="text-xl font-semibold">Plan {index + 1}</h3>
-              <div className="mb-4">
-                <h4 className="text-lg font-medium mb-2">Exercise Plan:</h4>
-                <p className="whitespace-pre-wrap">{plan.exercise}</p>
+          {currentPlans.length === 0 ? (
+            <p>No plans to display.</p>
+          ) : (
+            currentPlans.map((item, index) => (
+              <div key={index} className="p-4 bg-gray-100 mb-4 rounded">
+                <h4 className="text-lg font-semibold mb-2">
+                  Plan {indexOfFirstPlan + index + 1}
+                </h4>
+                <div className="mb-2">
+                  <strong>Exercise:</strong>
+                  <p>{item.exercise}</p>
+                </div>
+                <div className="mb-2">
+                  <strong>Diet:</strong>
+                  <p>{item.diet}</p>
+                </div>
+                <div>
+                  <strong>Recommendations:</strong>
+                  <p>{item.recommendations}</p>
+                </div>
               </div>
-              <div className="mb-4">
-                <h4 className="text-lg font-medium mb-2">Diet Plan:</h4>
-                <p className="whitespace-pre-wrap">{plan.diet}</p>
-              </div>
-              <div className="mb-4">
-                <h4 className="text-lg font-medium mb-2">Recommendations:</h4>
-                <p className="whitespace-pre-wrap">{plan.recommendations}</p>
-              </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
