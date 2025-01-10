@@ -12,7 +12,7 @@ import ExploreExercisesPage from './ExploreExercisesPage';
 import AiChatPage from './AiChatPage';
 import FitnessPlanForm from '../components/FitnessPlanForm';
 import FitnessTrackingPage from './FitnessTrackingPage';  
-import LoginPage from '../components/Loginpage';
+import LoginPage from '../components/LoginPage';
 import AboutPage from '../components/AboutPage';
 
 const HomePage = () => {
