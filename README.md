@@ -1,6 +1,7 @@
 # FitnessPro
 
 A modern and user-friendly fitness application designed to help users achieve their health and fitness goals. This app leverages APIs and AI to provide customized fitness plans, a chatbot for guidance, and integration with fitness tracking tools.
+![](https://images.pexels.com/photos/1954524/pexels-photo-1954524.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
 
 ## Features
 
