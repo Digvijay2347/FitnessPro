@@ -15,14 +15,14 @@ const teamMembers = [
     name: 'Sajal Sahu',
     role: 'Software Developer',
     expertise: 'Software Architecture, Testing, Deployment, Backend Developer',
-    image: '/src/assets/rst.jpg',
+    image: 'https://i.postimg.cc/fLD926sL/rst.jpg',
     linkedin: 'https://www.linkedin.com/in/sajal-sahu-3545a7251/', // Add LinkedIn link
   },
   {
     name: 'Harshit Sahu',
     role: 'ML Engineer',
     expertise: 'UX/UI Design, AI/ML',
-    image: '/src/assets/hnny.png',
+    image: 'https://i.postimg.cc/PJq8hYPn/hnny.png',
     github: 'https://github.com/hnny1436', 
   },
 ];
