@@ -7,9 +7,9 @@ function ContactForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to a server
+    
     console.log('Form submitted', { name, email, message });
-    // Reset form fields
+    
     setName('');
     setEmail('');
     setMessage('');
