@@ -15,7 +15,6 @@ const AiChatPage = () => {
 
   useEffect(scrollToBottom, [messages]);
 
-  // Function to check if response is fitness-related
   const isFitnessRelated = (text) => {
     const fitnessKeywords = ["exercise", "workout", "fitness", "strength", "training", "diet", "nutrition", "cardio", "muscle", "weight loss", "bodybuilding"];
     return fitnessKeywords.some(keyword => text.toLowerCase().includes(keyword));
@@ -29,14 +28,13 @@ const AiChatPage = () => {
       setInput('');
 
       try {
-        // Send the user's message to the AI API
         const response = await axios.post('https://fitnesspro-back-2.onrender.com/api/chat', {
           message: `This is a fitness-focused chatbot. Only provide information related to exercise, workouts, fitness plans, and nutrition. ${input}`
         });
 
-        let aiResponseText = response.data.response.replace(/[*_]/g, ''); // Removes stars and underscores
+        let aiResponseText = response.data.response.replace(/[*_]/g, ''); 
 
-        // Check if AI response is fitness-related
+        
         if (!isFitnessRelated(aiResponseText)) {
           aiResponseText = "I'm here to assist with fitness and exercise topics only. Please ask something related to workouts, diet, or fitness plans.";
         }
