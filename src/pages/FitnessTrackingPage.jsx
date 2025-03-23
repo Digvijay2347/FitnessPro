@@ -20,7 +20,7 @@ import {
 } from 'recharts';
 
 const FitnessTrackingPage = () => {
-  const [workouts, setWorkouts] = useState([]);  // Holds the list of workouts
+  const [workouts, setWorkouts] = useState([]); 
   const [newWorkout, setNewWorkout] = useState({
     type: 'Running',
     duration: '',
@@ -34,7 +34,6 @@ const FitnessTrackingPage = () => {
   const [workoutPlan, setWorkoutPlan] = useState([]);
   const [showAddWorkout, setShowAddWorkout] = useState(false);
 
-  // Fetch stored workout plans from Supabase on load
   useEffect(() => {
     const fetchWorkoutPlan = async () => {
       if (generatedKey) {
@@ -47,17 +46,14 @@ const FitnessTrackingPage = () => {
           console.error('Error fetching workout plan:', error);
         } else {
           setWorkoutPlan(data);
-          setWorkouts(data);  // Update workouts state with fetched data
+          setWorkouts(data); 
         }
       }
     };
     fetchWorkoutPlan();
   }, [generatedKey]);
-
-  // Save workout to Supabase
   const saveWorkoutToSupabase = async () => {
     if (generatedKey) {
-      // Ensure numeric fields are valid numbers or set to 0 if empty
       const duration = newWorkout.duration ? Number(newWorkout.duration) : 0;
       const distance = newWorkout.distance ? Number(newWorkout.distance) : 0;
       const calories = newWorkout.calories ? Number(newWorkout.calories) : 0;
@@ -84,7 +80,7 @@ const FitnessTrackingPage = () => {
           console.error('Error saving workout:', error);
         } else {
           alert('Workout saved successfully!');
-          // Immediately update the workouts state with the new workout
+         
           setWorkouts([data[0], ...workouts]);
         }
       } catch (error) {
@@ -95,7 +91,7 @@ const FitnessTrackingPage = () => {
     }
   };
 
-// Handle new workout form submission
+
 const handleAddWorkout = (e) => {
   e.preventDefault();
   if (newWorkout.type === "Strength Training") {
@@ -123,7 +119,7 @@ const handleAddWorkout = (e) => {
 };
 
 
-  // Helper function to convert data into chart-friendly format
+
   const getChartData = () => {
     return workouts.map((workout) => ({
       date: workout.date,
@@ -134,7 +130,6 @@ const handleAddWorkout = (e) => {
     }));
   };
 
-  // Helper function for pie chart data (workout types distribution)
   const getPieChartData = () => {
     const typeCount = workouts.reduce((acc, workout) => {
       acc[workout.type] = (acc[workout.type] || 0) + 1;
@@ -147,7 +142,6 @@ const handleAddWorkout = (e) => {
     }));
   };
 
-  // Chart rendering logic
   const renderWorkoutPlanChart = () => {
     const chartData = getChartData();
 
@@ -242,7 +236,6 @@ const handleAddWorkout = (e) => {
         </button>
       </div>
 
-      {/* Enter Generated Key */}
       <div className="bg-white p-8 justify-center rounded-xl shadow-sm border ">
         <h3 className="text-lg font-semibold mb-4">Enter Generated Key</h3>
         <input
@@ -262,7 +255,7 @@ const handleAddWorkout = (e) => {
         </div>
       </div>
 
-      {/* Display Charts */}
+      
       <div className="space-y-6 border rounded-xl p-6">
         <h2 className="text-2xl font-semibold">Workout Trend Analysis</h2>
         {renderWorkoutPlanChart()}
@@ -273,11 +266,11 @@ const handleAddWorkout = (e) => {
         {renderPieChart()}
       </div>
 
-      {/* Add New Workout Form */}
+     
 {showAddWorkout && (
   <div className="fixed inset-0 flex items-center justify-center ">
     <div className="bg-white p-6 rounded-xl shadow-lg max-w-md w-full relative">
-      {/* Close Button */}
+     
       <button id="bckk"
         onClick={() => setShowAddWorkout(false)}
         className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -289,7 +282,7 @@ const handleAddWorkout = (e) => {
 
       <h2 className="text-xl font-semibold mb-4">Add New Workout</h2>
       <form onSubmit={handleAddWorkout} className="space-y-4">
-        {/* Workout Type */}
+       
         <div>
           <label className="block text-sm font-medium mb-1">Workout Type</label>
           <select
@@ -305,7 +298,7 @@ const handleAddWorkout = (e) => {
           </select>
         </div>
 
-        {/* Common Fields: Duration */}
+     
         <div>
           <label className="block text-sm font-medium mb-1">Duration (mins)</label>
           <input
@@ -316,7 +309,7 @@ const handleAddWorkout = (e) => {
           />
         </div>
 
-        {/* Conditional Fields Based on Workout Type */}
+        
         {newWorkout.type !== "Strength Training" && (
           <>
             <div>
@@ -375,7 +368,6 @@ const handleAddWorkout = (e) => {
           </>
         )}
 
-        {/* Save Button */}
         <div className="flex justify-end mt-4">
           <button
             type="submit"
