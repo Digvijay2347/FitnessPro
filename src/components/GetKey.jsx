@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
-// Supabase credentials directly in the code
-const supabaseUrl = "https://nplllqyjcujfzkjvhxzr.supabase.co"; // Replace with your Supabase URL
+const supabaseUrl = "https://nplllqyjcujfzkjvhxzr.supabase.co"; 
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wbGxscXlqY3VqZnpranZoeHpyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzAwNTgxMDMsImV4cCI6MjA0NTYzNDEwM30.d1m93U2Buv604epNCmtRHplztFILMRXSF-WEXGbto1E"; // Replace with your Supabase anon key
 const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -11,7 +10,7 @@ const KeyGeneratorPopup = () => {
   const [generatedKey, setGeneratedKey] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [email, setEmail] = useState(""); // Store the email entered by the user
+  const [email, setEmail] = useState(""); 
 
   const togglePopup = () => {
     setIsPopupOpen(!isPopupOpen);
@@ -21,7 +20,7 @@ const KeyGeneratorPopup = () => {
     setLoading(true);
     setError("");
     try {
-      // Fetch user IP
+      
       const ipResponse = await fetch("https://api.ipify.org?format=json");
       if (!ipResponse.ok) {
         throw new Error("Failed to fetch IP address");
@@ -37,7 +36,7 @@ const KeyGeneratorPopup = () => {
         return;
       }
   
-      // Check if the combination of IP and email already has a generated key
+      
       const { data: existingKeys, error: fetchError } = await supabase
         .from("keys")
         .select("*")
@@ -51,28 +50,28 @@ const KeyGeneratorPopup = () => {
   
       if (existingKeys.length > 0) {
         alert("You have already created a key with this IP and email.");
-        setGeneratedKey(existingKeys[0].generated_key); // Display the existing key
+        setGeneratedKey(existingKeys[0].generated_key); 
         return;
       }
   
-      // Create a unique input string using IP, email, and timestamp
+      
       const data = `${userIp}-${email}-${Date.now()}-${Math.random()}`;
   
-      // Generate a SHA-256 hash of the data
+      
       const encoder = new TextEncoder();
       const dataBuffer = encoder.encode(data);
       const hashBuffer = await crypto.subtle.digest("SHA-256", dataBuffer);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       
-      // Convert the hash to a hexadecimal string
+     
       const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, "0")).join("");
       
-      // Use the first 16 characters of the hash as the key
+     
       const key = hashHex.substring(0, 16);
   
       console.log("Generated Key:", key);
   
-      // Store the new key in Supabase
+      
       const { error: dbError } = await supabase.from("keys").insert([
         { ip_address: userIp, email: email, generated_key: key },
       ]);
@@ -82,7 +81,7 @@ const KeyGeneratorPopup = () => {
         throw dbError;
       }
   
-      // Update state with the new key
+      
       setGeneratedKey(key);
     } catch (err) {
       console.error("Error:", err);
