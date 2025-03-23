@@ -7,11 +7,11 @@ const Auth = ({ onLogin }) => {
 
   const signInWithGoogle = async () => {
     setLoading(true);
-    setError(null); // Reset error state before attempting sign-in
+    setError(null);
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: 'http://localhost:5173/auth/callback', // Adjust this if needed
+        redirectTo: 'http://localhost:5173/auth/callback', 
       }
     });
     if (error) {
@@ -40,7 +40,7 @@ const Auth = ({ onLogin }) => {
         {loading ? 'Signing in...' : 'Sign in with Google'}
       </button>
       {error && (
-        <p className="mt-4 text-red-500">{error}</p> // Display the error message to the user
+        <p className="mt-4 text-red-500">{error}</p>
       )}
     </div>
   );
