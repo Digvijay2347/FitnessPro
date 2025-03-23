@@ -5,8 +5,6 @@ import { Button } from './button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card';
 import { Copy, Key, Loader2 } from 'lucide-react';
 
-// When using Vite, use import.meta.env
-// When using Create React App, prefix with VITE_
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
