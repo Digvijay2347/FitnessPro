@@ -9,14 +9,14 @@ const teamMembers = [
     role: 'Software Engineer',
     expertise: 'Strategic Planning, Integration, Full-Stack, API Development',
     image: 'https://i.postimg.cc/SsdzwDQG/dig.jpg',
-    linkedin: 'https://www.linkedin.com/in/singh07digvijay/', // Add LinkedIn link
+    linkedin: 'https://www.linkedin.com/in/singh07digvijay/', 
   },
   {
     name: 'Sajal Sahu',
     role: 'Software Developer',
     expertise: 'Software Architecture, Testing, Deployment, Backend Developer',
     image: 'https://i.postimg.cc/fLD926sL/rst.jpg',
-    linkedin: 'https://www.linkedin.com/in/sajal-sahu-3545a7251/', // Add LinkedIn link
+    linkedin: 'https://www.linkedin.com/in/sajal-sahu-3545a7251/',
   },
   {
     name: 'Harshit Sahu',
