@@ -1,5 +1,3 @@
-// src/pages/UserProfilePage.js
-
 import React, { useEffect, useState } from 'react';
 import supabase from '../supabaseClient';
 
@@ -8,10 +6,9 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     const fetchApiKey = async () => {
-      const user = supabase.auth.user(); // Get the logged-in user ID
+      const user = supabase.auth.user();
 
       if (user) {
-        // Fetch the API key from the database for the logged-in user
         const { data, error } = await supabase
           .from('api_keys')
           .select('api_key')
