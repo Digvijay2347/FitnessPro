@@ -20,7 +20,7 @@ const Login = () => {
     const handleSession = async () => {
       const { data } = await supabase.auth.getSession();
       if (data.session) {
-        // If logged in, generate key and navigate to homepage
+       
         const user = data.session.user;
         const key = generateUniqueKey();
 
@@ -32,8 +32,8 @@ const Login = () => {
           console.error('Error storing API key:', error.message);
           alert('Failed to generate API key.');
         } else {
-          localStorage.setItem('apiKey', key); // Store in localStorage
-          navigate('/'); // Redirect to homepage
+          localStorage.setItem('apiKey', key); 
+          navigate('/');
         }
       }
     };
