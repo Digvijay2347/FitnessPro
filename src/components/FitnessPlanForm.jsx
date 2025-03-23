@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Download } from "lucide-react";
-import { supabase } from "../supabaseClient"; // Ensure correct import
+import { supabase } from "../supabaseClient";
 
 const FitnessPlanForm = () => {
   const [formData, setFormData] = useState({
@@ -8,15 +8,15 @@ const FitnessPlanForm = () => {
     weight: '',
     height: '',
     goals: '',
-    generatedKey: '' // Added field for key
+    generatedKey: '' 
   });
   const [plan, setPlan] = useState(null);
   const [error, setError] = useState(null);
   const [downloading, setDownloading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
-  const [keyError, setKeyError] = useState(null); // Error for key retrieval
-  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [keyError, setKeyError] = useState(null); 
+  const [currentPage, setCurrentPage] = useState(1); 
   const planRef = useRef(null);
 
   const handleChange = (e) => {
@@ -61,7 +61,7 @@ const FitnessPlanForm = () => {
       const data = await response.json();
       setPlan(data);
   
-      // Store the generated plan in Supabase
+      
       const { error } = await supabase
         .from('fitness_plans')
         .insert([{ generated_key: generatedKey, plan_data: data }]);
@@ -115,7 +115,7 @@ const FitnessPlanForm = () => {
       return;
     }
 
-    // Fetch fitness plans based on the entered generated key
+    
     const { data, error } = await supabase
       .from('fitness_plans')
       .select('plan_data')
@@ -132,30 +132,27 @@ const FitnessPlanForm = () => {
       return;
     }
 
-    // Display the fetched plans
+   
     setHistory(data.map(item => item.plan_data));
     setKeyError(null);
-    setCurrentPage(1); // Reset to first page when new history is retrieved
+    setCurrentPage(1); 
   };
 
-  // Pagination Logic
+  
   const itemsPerPage = 3;
   const indexOfLastPlan = currentPage * itemsPerPage;
   const indexOfFirstPlan = indexOfLastPlan - itemsPerPage;
   const currentPlans = history.slice(indexOfFirstPlan, indexOfLastPlan);
 
-  // Generate page numbers
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(history.length / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
 
-  // Change Page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className="w-full mx-auto p-4 bg-white shadow-md rounded-md flex gap-6">
-      {/* Main Form and Plan Section */}
       <div className="flex-1">
         <h2 className="text-2xl font-bold mb-4">Generate Your Fitness Plan</h2>
 
