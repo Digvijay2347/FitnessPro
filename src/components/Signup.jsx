@@ -1,4 +1,3 @@
-// src/pages/Signup.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import supabase from '../supabaseClient';
@@ -19,7 +18,7 @@ const Signup = () => {
       setError(error.message);
     } else {
       console.log('User signed up:', user);
-      navigate('/login'); // Redirect to login page after successful signup
+      navigate('/login'); 
     }
   };
 
